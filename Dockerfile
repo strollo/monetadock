@@ -1,4 +1,4 @@
-FROM ubuntu:14.04 AS monetaweb
+FROM ubuntu:14.04
 
 MAINTAINER strollo <daniele.strollo@gmail.com>
 
@@ -41,18 +41,18 @@ RUN rm -fr /var/lib/mysql/mysql
 WORKDIR /scripts
 
 COPY ./conf/configuration.sh /scripts/configuration.sh
-RUN chmod +x /scripts/configuration.sh
+RUN dos2unix /scripts/configuration.sh && chmod +x /scripts/configuration.sh
 COPY ./scripts/init_mysql.sh /scripts/init_mysql.sh
-RUN chmod +x /scripts/init_mysql.sh
+RUN dos2unix /scripts/init_mysql.sh && chmod +x /scripts/init_mysql.sh
 # Initialized DBMS
 RUN /scripts/init_mysql.sh
 
 COPY ./scripts/get_moneta.sh /scripts/get_moneta.sh
-RUN chmod +x /scripts/get_moneta.sh
+RUN dos2unix /scripts/get_moneta.sh && chmod +x /scripts/get_moneta.sh
 RUN /scripts/get_moneta.sh
 
 COPY ./scripts/run_services.sh /scripts/run_services.sh
-RUN chmod +x /scripts/run_services.sh
+RUN dos2unix /scripts/run_services.sh && chmod +x /scripts/run_services.sh
 
 ############################################################
 # - PORTS AND VOLUMES
